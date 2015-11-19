@@ -48,5 +48,9 @@ func main() {
 		milight.TurnOff(milight.Zone3),
 		milight.TurnOff(milight.Zone2),
 		milight.TurnOff(milight.Zone1),
+		//milight.TurnOn(milight.ZoneAll),
+		//milight.DiscoMode(),
+		//milight.DiscoModeFaster(),
+		//milight.DiscoModeSlower(),
 	)
 }
