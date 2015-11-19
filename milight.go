@@ -60,44 +60,44 @@ func Send(addr string, values ...[]byte) error {
 	return nil
 }
 
-// TurnOff turns off the lights in the selected zone(s)
+// TurnOff turns off the lights in the selected zone and selects this zone for future actions
 func TurnOff(zone int) []byte {
 	return off[zone]
 }
 
-// TurnOn turns on the lights in the selected zone(s) without changing their in-bulb values
+// TurnOn turns on the lights in the selected zone without changing their in-bulb values and selects this zone for future actions
 func TurnOn(zone int) []byte {
 	return on[zone]
 }
 
-// SetWhite sets the lights in the selected zone(s) to full white
+// SetWhite sets the lights in the selected zone to full white and selects this zone for future actions
 func SetWhite(zone int) []byte {
 	return append(white[zone], white[zone]...) // apparently have to turn the bulb on first before setting WHITE
 }
 
-// SetNight sets the lights in the selected zone(s) to night mode
+// SetNight sets the lights in the selected zone to night mode and selects this zone for future actions
 func SetNight(zone int) []byte {
 	return append(night[zone], night[zone]...) // apparently have to turn the bulb on first before setting WHITE, so we'll do it for night too
 }
 
-// SetBrightness sets the brightness for the lights in the already selected zone(s)
+// SetBrightness sets the brightness for the lights in the currently selected zone
 func SetBrightness(brightness float64) []byte {
 	value := byte(brightness*float64(brightnessValueMax-brightnessValueMin)) + brightnessValueMin
 	return []byte{brightnessPrefix, value}
 }
 
-// SetColorRGB sets the color for the selected zone(s), using int 0-255 as the RGB values
+// SetColorRGB sets the color using int 0-255 as the RGB values for lights in the currently selected zone
 func SetColorRGB(r, g, b int) []byte {
 	return SetColorRGBFloat(float64(r)/255, float64(g)/255, float64(b)/255)
 }
 
-// SetColorRGBHex sets the color for the selected zone(s), using #000000 as the RGB values
+// SetColorRGBHex sets the color using #000000 as the RGB values for lights in the currently selected zone
 func SetColorRGBHex(rgb string) []byte {
 	hex, _ := colorful.Hex(rgb)
 	return setColor(hex)
 }
 
-// SetColorRGBFloat sets the color for the selected zone(s), using float64 0..1 as the RGB values
+// SetColorRGBFloat sets the color using float64 0..1 as the RGB values for lights in the currently selected zone
 func SetColorRGBFloat(r, g, b float64) []byte {
 	return setColor(colorful.Color{r, g, b})
 }
@@ -106,4 +106,19 @@ func setColor(color colorful.Color) []byte {
 	hue, _, _ := color.Hsv()
 	value := byte(int(256+176-(hue/360*255)) % 256) // math stolen from https://goo.gl/rMwABR
 	return []byte{colorPrefix, value}
+}
+
+// DiscoMode turns on disco mode for lights in the currently selected zone.  Running this more than once will cycle to the next disco mode, of which there are many (built into the bulbs, apparently).
+func DiscoMode() []byte {
+	return discoModeOn
+}
+
+// DiscoModeFaster makes disco mode run faster on lights in the currently selected zone.
+func DiscoModeFaster() []byte {
+	return discoModeFaster
+}
+
+// DiscoModeSlower makes disco mode run slower on lights in the currently selected zone.
+func DiscoModeSlower() []byte {
+	return discoModeSlower
 }
