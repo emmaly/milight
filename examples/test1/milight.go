@@ -1,0 +1,52 @@
+package main
+
+import "github.com/dustywilson/milight"
+
+func main() {
+	addr := "10.10.10.104:8899"
+
+	milight.Send(addr,
+		milight.TurnOn(milight.Zone1),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#FF0000"),
+		milight.TurnOn(milight.Zone2),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#FF0000"),
+		milight.TurnOn(milight.Zone3),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#FF0000"),
+		milight.TurnOn(milight.Zone4),
+		milight.SetBrightness(0.25),
+		milight.SetColorRGBHex("#FF0000"),
+		milight.TurnOff(milight.Zone3),
+		milight.TurnOff(milight.Zone2),
+		milight.TurnOff(milight.Zone1),
+		milight.SetWhite(milight.Zone3),
+		milight.SetBrightness(1),
+		milight.SetWhite(milight.Zone2),
+		milight.SetBrightness(1),
+		milight.SetWhite(milight.Zone1),
+		milight.SetBrightness(1),
+		milight.TurnOff(milight.Zone3),
+		milight.TurnOff(milight.Zone2),
+		milight.TurnOff(milight.Zone1),
+		milight.SetNight(milight.Zone3),
+		milight.SetNight(milight.Zone2),
+		milight.SetNight(milight.Zone1),
+		milight.TurnOn(milight.Zone1),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#0000FF"),
+		milight.TurnOn(milight.Zone2),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#0000FF"),
+		milight.TurnOn(milight.Zone3),
+		milight.SetBrightness(0.1),
+		milight.SetColorRGBHex("#0000FF"),
+		milight.TurnOn(milight.Zone4),
+		milight.SetBrightness(0.25),
+		milight.SetColorRGBHex("#0000FF"),
+		milight.TurnOff(milight.Zone3),
+		milight.TurnOff(milight.Zone2),
+		milight.TurnOff(milight.Zone1),
+	)
+}
